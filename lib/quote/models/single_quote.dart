@@ -5,8 +5,8 @@ class SingleQuote {
 
   SingleQuote({required this.id, required this.author, required this.content});
 
-  static final empty =
-      SingleQuote(id: "id", author: "author", content: "content");
+  static final empty = SingleQuote(
+      id: "id", author: "author", content: "Please pull to refresh");
 
   factory SingleQuote.fromJson(Map<String, dynamic> json) => SingleQuote(
       id: json['_id'], author: json['author'], content: json['content']);

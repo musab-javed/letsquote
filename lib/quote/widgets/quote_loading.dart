@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SingleQuoteLoading extends StatelessWidget {
-  const SingleQuoteLoading({super.key});
+class QuoteLoading extends StatelessWidget {
+  const QuoteLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,8 @@ class SingleQuoteLoading extends StatelessWidget {
           borderRadius: BorderRadius.circular(14.0),
           color: Colors.white,
         ),
-        height: 200,
-        width: 400,
+        height: 100,
+        width: double.infinity,
       ),
     );
   }

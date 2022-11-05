@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:letsquote/quote/cubit/single_quote_cubit.dart';
 import 'package:letsquote/quote/quote_repository.dart';
+import 'package:letsquote/quote/screens/all_quotes_screen.dart';
 import 'package:letsquote/quote/widgets/single_quote_loading.dart';
 
 class SingleQuoteScreen extends StatelessWidget {
@@ -30,7 +31,9 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
       ),
       body: BlocConsumer<SingleQuoteCubit, SingleQuoteState>(
         listener: (context, state) {
+          print('listener from sinle code');
           if (state.status.isInitial) {
+            print('${state.status}');
             context.read<SingleQuoteCubit>().fetchQuote();
           }
         },
@@ -43,6 +46,25 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
               child: ListView(shrinkWrap: true, children: [
                 SizedBox(
                   height: 100,
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  height: 20,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AllQuotesScreen())),
+                    child: Text(
+                      'Explore all quotes',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
                 ),
                 state.status.isLoading
                     ? SingleQuoteLoading()
