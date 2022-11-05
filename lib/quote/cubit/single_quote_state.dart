@@ -2,6 +2,13 @@ part of 'single_quote_cubit.dart';
 
 enum SingleQuoteStatus { initial, loading, success, failure }
 
+extension SingleQuoteStatusX on SingleQuoteStatus {
+  bool get isInitial => this == SingleQuoteStatus.initial;
+  bool get isLoading => this == SingleQuoteStatus.loading;
+  bool get isSuccess => this == SingleQuoteStatus.success;
+  bool get isFailure => this == SingleQuoteStatus.failure;
+}
+
 class SingleQuoteState extends Equatable {
   SingleQuoteState(
       {this.status = SingleQuoteStatus.initial, SingleQuote? quote})
