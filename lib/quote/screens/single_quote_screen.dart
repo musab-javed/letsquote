@@ -8,8 +8,8 @@ import 'package:letsquote/quote/widgets/single_quote_loading.dart';
 class SingleQuoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SingleQuoteCubit(context.read<QuoteRepository>()),
+    return BlocProvider<SingleQuoteCubit>(
+      create: (context) => SingleQuoteCubit(context.read<QuoteRepository>())..fetchQuote(),
       child: const SingleQuoteView(),
     );
   }

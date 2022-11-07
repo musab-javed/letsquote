@@ -10,7 +10,8 @@ class AllQuotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => QuotesCubit(context.read<QuoteRepository>()),
+      create: (context) =>
+          QuotesCubit(context.read<QuoteRepository>())..fetchAllQuote(),
       child: AllQuotesView(),
     );
   }
