@@ -1,4 +1,6 @@
-class SingleQuote {
+import 'package:equatable/equatable.dart';
+
+class SingleQuote  extends Equatable{
   final String id;
   final String author;
   final String content;
@@ -26,4 +28,7 @@ class SingleQuote {
         author: author ?? this.author,
         content: content ?? this.content);
   }
+  
+  @override
+  List<Object?> get props => [id, author, content];
 }

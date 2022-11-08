@@ -12,7 +12,7 @@ class AllQuotesScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           QuotesCubit(context.read<QuoteRepository>())..fetchAllQuote(),
-      child: AllQuotesView(),
+      child: const AllQuotesView(),
     );
   }
 }
@@ -56,7 +56,7 @@ class _AllQuotesViewState extends State<AllQuotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Quotes'),
+        title: const Text('All Quotes'),
       ),
       body: BlocConsumer<QuotesCubit, QuotesState>(
         listener: (context, state) {
@@ -74,7 +74,7 @@ class _AllQuotesViewState extends State<AllQuotesView> {
                           onRefresh: () {
                             return context.read<QuotesCubit>().fetchAllQuote();
                           },
-                          child: AllQuotesLoading()),
+                          child: const AllQuotesLoading()),
                     )
                   : Expanded(
                       child: RefreshIndicator(
@@ -83,21 +83,22 @@ class _AllQuotesViewState extends State<AllQuotesView> {
                       child: ListView.separated(
                           controller: _scrollController,
                           shrinkWrap: true,
-                          separatorBuilder: (context, index) => SizedBox(
+                          separatorBuilder: (context, index) => const SizedBox(
                                 height: 8.0,
                               ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 5.0),
                           itemCount: state.hasReachedMax
                               ? state.quotes.length
                               : state.quotes.length + 1,
                           itemBuilder: (BuildContext context, int index) {
                             if (index > state.quotes.length - 1) {
-                              return QuoteLoading();
+                              return const QuoteLoading();
                             }
                             final SingleQuote q = state.quotes[index];
                             return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
                                   border: Border.all(color: Colors.black)),
@@ -106,13 +107,13 @@ class _AllQuotesViewState extends State<AllQuotesView> {
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('${q.content}'),
-                                    SizedBox(height: 10),
+                                    Text(q.content),
+                                    const SizedBox(height: 10),
                                     Align(
                                       alignment: Alignment.bottomRight,
                                       child: Text(
-                                        '${q.author}',
-                                        style: TextStyle(
+                                        q.author,
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w600),
                                       ),
                                     )
