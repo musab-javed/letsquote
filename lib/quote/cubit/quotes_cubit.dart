@@ -13,7 +13,6 @@ class QuotesCubit extends Cubit<QuotesState> {
   List<SingleQuote> allQuotes = [];
 
   Future<void> fetchAllQuote() async {
-    print('fetchAllQuote called');
     emit(state.copyWith(status: QuotesStatus.loading));
 
     try {
@@ -24,7 +23,6 @@ class QuotesCubit extends Cubit<QuotesState> {
           .toList();
       emit(state.copyWith(status: QuotesStatus.success, quotes: allQuotes));
     } catch (e) {
-      print('error in fetchAllQuote from cubit $e');
       emit(state.copyWith(status: QuotesStatus.failure));
     }
   }
@@ -32,7 +30,6 @@ class QuotesCubit extends Cubit<QuotesState> {
   bool isMax = false;
   bool isLoading = false;
   Future<void> fetchMore() async {
-    print('fetchMore called');
     if (isMax) return;
     if (isLoading) return;
     isLoading = true;
@@ -42,23 +39,19 @@ class QuotesCubit extends Cubit<QuotesState> {
           .map((q) => SingleQuote(
               id: q['_id'], author: q['author'], content: q['content']))
           .toList());
-      print('printing qupotes ${allQuotes.length}');
       isMax = _quoteRepository.getMax();
-      print(isMax);
       if (isMax) {
         isLoading = false;
         emit(state.copyWith(
             status: QuotesStatus.success, quotes: allQuotes, max: isMax));
       } else {
         isLoading = false;
-        print('ok');
         emit(state.copyWith(
             status: QuotesStatus.success,
             quotes: allQuotes,
             length: allQuotes.length));
       }
     } catch (e) {
-      print('error in fetchAllQuote from cubit $e');
       emit(state.copyWith(status: QuotesStatus.failure));
     }
   }
