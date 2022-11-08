@@ -22,7 +22,6 @@ class QuotesCubit extends Cubit<QuotesState> {
           .map((q) => SingleQuote(
               id: q['_id'], author: q['author'], content: q['content']))
           .toList();
-
       emit(state.copyWith(status: QuotesStatus.success, quotes: allQuotes));
     } catch (e) {
       print('error in fetchAllQuote from cubit $e');
@@ -53,7 +52,10 @@ class QuotesCubit extends Cubit<QuotesState> {
       } else {
         isLoading = false;
         print('ok');
-        emit(state.copyWith(status: QuotesStatus.success, quotes: allQuotes, length: allQuotes.length));
+        emit(state.copyWith(
+            status: QuotesStatus.success,
+            quotes: allQuotes,
+            length: allQuotes.length));
       }
     } catch (e) {
       print('error in fetchAllQuote from cubit $e');
