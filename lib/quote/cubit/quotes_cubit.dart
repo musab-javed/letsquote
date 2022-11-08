@@ -21,7 +21,6 @@ class QuotesCubit extends Cubit<QuotesState> {
           .map((q) => SingleQuote(
               id: q['_id'], author: q['author'], content: q['content']))
           .toList();
-
       emit(state.copyWith(status: QuotesStatus.success, quotes: allQuotes));
     } catch (e) {
       emit(state.copyWith(status: QuotesStatus.failure));

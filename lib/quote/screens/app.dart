@@ -24,7 +24,7 @@ class QuoteApp extends StatelessWidget {
             BlocProvider(
                 create: (BuildContext context) => QuotesCubit(_quoteRepository))
           ],
-          child: QuoteAppView(),
+          child: const QuoteAppView(),
         ));
   }
 }
