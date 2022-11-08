@@ -9,7 +9,8 @@ class SingleQuoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SingleQuoteCubit>(
-      create: (context) => SingleQuoteCubit(context.read<QuoteRepository>())..fetchQuote(),
+      create: (context) =>
+          SingleQuoteCubit(context.read<QuoteRepository>())..fetchQuote(),
       child: const SingleQuoteView(),
     );
   }
@@ -27,24 +28,22 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome to LetsQuote!'),
+        title: const Text('Welcome to LetsQuote!'),
       ),
       body: BlocConsumer<SingleQuoteCubit, SingleQuoteState>(
         listener: (context, state) {
-          print('listener from sinle code');
           if (state.status.isInitial) {
-            print('${state.status}');
             context.read<SingleQuoteCubit>().fetchQuote();
           }
         },
         builder: (context, state) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 22),
             child: RefreshIndicator(
               onRefresh: () => context.read<SingleQuoteCubit>().fetchQuote(),
               child: ListView(shrinkWrap: true, children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Container(
@@ -55,7 +54,7 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => AllQuotesScreen())),
-                    child: Text(
+                    child: const Text(
                       'Explore all quotes',
                       style: TextStyle(
                           color: Colors.blue,
@@ -63,15 +62,15 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 state.status.isLoading
-                    ? SingleQuoteLoading()
+                    ? const SingleQuoteLoading()
                     : Container(
                         width: 500,
                         height: 200,
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 18.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.0),
@@ -81,13 +80,15 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
                           children: [
                             Text(
                               '"${state.quote.content}"',
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                              style:
+                                  const TextStyle(fontStyle: FontStyle.italic),
                             ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
                                 '-${state.quote.author}',
-                                style: TextStyle(fontWeight: FontWeight.w600),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600),
                               ),
                             )
                           ],

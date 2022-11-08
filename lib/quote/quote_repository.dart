@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'models/single_quote.dart';
@@ -14,12 +13,10 @@ class AllQuotesFetchFailed implements Exception {}
 class GetMoreFailed implements Exception {}
 
 class QuoteRepository {
-  static final baseUrl = 'https://api.quotable.io';
+  static const baseUrl = 'https://api.quotable.io';
 
   Future<SingleQuote> getSingleQuote() async {
     final res = await http.get(Uri.parse("$baseUrl/random"));
-    print('hello');
-    print(res.body);
     if (res.statusCode != 200) {
       throw SingleQuoteFetchFailed();
     }
@@ -35,8 +32,6 @@ class QuoteRepository {
   Future<List> getAllQuotes() async {
     page = 1;
     final res = await http.get(Uri.parse("$baseUrl/quotes?limit=6"));
-    print('hello get all quotes called');
-    print(res.body);
     if (res.statusCode != 200) {
       throw AllQuotesFetchFailed();
     }
@@ -51,8 +46,6 @@ class QuoteRepository {
   Future<List> getMore() async {
     final res =
         await http.get(Uri.parse("$baseUrl/quotes?limit=3&page=${++page}"));
-    print('hello get more called');
-    print(res.body);
     if (res.statusCode != 200) {
       throw GetMoreFailed();
     }

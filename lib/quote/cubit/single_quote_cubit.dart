@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -14,7 +12,6 @@ class SingleQuoteCubit extends Cubit<SingleQuoteState> {
   final QuoteRepository _quoteRepository;
 
   Future<void> fetchQuote() async {
-    print('fetchQuote called');
     emit(state.copyWith(status: SingleQuoteStatus.loading));
 
     try {

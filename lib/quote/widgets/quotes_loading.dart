@@ -7,10 +7,10 @@ class AllQuotesLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        separatorBuilder: ((context, index) => SizedBox(
+        separatorBuilder: ((context, index) => const SizedBox(
               height: 10,
             )),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5.0),
         itemCount: 5,
         itemBuilder: (BuildContext context, int index) {
           return Shimmer.fromColors(
