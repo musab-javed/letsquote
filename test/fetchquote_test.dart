@@ -30,7 +30,7 @@ void main() {
       await singleQuoteCubit.fetchQuote();
       verify(() => mockQuoteRepository.getSingleQuote()).called(1);
     });
-
+  
     test("""loading is true when quote is being fetched,
             then fetches Single Quote,
             then loading is false now""", () async {
