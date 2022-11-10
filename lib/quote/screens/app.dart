@@ -35,8 +35,8 @@ class QuoteAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SingleQuoteScreen(),
-      routes: {'/all': (context) => AllQuotesScreen()},
+      home: const SingleQuoteScreen(),
+      routes: {'/all': (context) => const AllQuotesScreen()},
     );
   }
 }

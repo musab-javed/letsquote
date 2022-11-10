@@ -9,6 +9,7 @@ extension QuotesStatusX on QuotesStatus {
   bool get isFailure => this == QuotesStatus.failure;
 }
 
+// ignore: must_be_immutable
 class QuotesState extends Equatable {
   QuotesState(
       {this.status = QuotesStatus.initial,

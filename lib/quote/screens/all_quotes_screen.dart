@@ -7,6 +7,8 @@ import 'package:letsquote/quote/widgets/quote_loading.dart';
 import 'package:letsquote/quote/widgets/quotes_loading.dart';
 
 class AllQuotesScreen extends StatelessWidget {
+  const AllQuotesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

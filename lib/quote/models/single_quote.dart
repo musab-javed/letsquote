@@ -5,6 +5,7 @@ class SingleQuote  extends Equatable{
   final String author;
   final String content;
 
+  // ignore: prefer_const_constructors_in_immutables
   SingleQuote({required this.id, required this.author, required this.content});
 
   static final empty = SingleQuote(

@@ -6,6 +6,8 @@ import 'package:letsquote/quote/screens/all_quotes_screen.dart';
 import 'package:letsquote/quote/widgets/single_quote_loading.dart';
 
 class SingleQuoteScreen extends StatelessWidget {
+  const SingleQuoteScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SingleQuoteCubit>(
@@ -53,7 +55,7 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AllQuotesScreen())),
+                            builder: (context) => const AllQuotesScreen())),
                     child: const Text(
                       'Explore all quotes',
                       style: TextStyle(
