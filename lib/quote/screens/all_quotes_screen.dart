@@ -107,7 +107,10 @@ class _AllQuotesViewState extends State<AllQuotesView> {
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(q.content),
+                                    Text(
+                                      q.content,
+                                      maxLines: 4,
+                                    ),
                                     const SizedBox(height: 10),
                                     Align(
                                       alignment: Alignment.bottomRight,

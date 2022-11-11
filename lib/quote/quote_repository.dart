@@ -1,16 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:letsquote/quote/custom_exceptions.dart';
 
 import 'models/single_quote.dart';
-
-class SingleQuoteFetchFailed implements Exception {}
-
-class QuoteNotFoundFailure implements Exception {}
-
-class AllQuotesFetchFailed implements Exception {}
-
-class GetMoreFailed implements Exception {}
 
 class QuoteRepository {
   static const baseUrl = 'https://api.quotable.io';
@@ -18,11 +11,12 @@ class QuoteRepository {
   Future<SingleQuote> getSingleQuote() async {
     final res = await http.get(Uri.parse("$baseUrl/random"));
     if (res.statusCode != 200) {
-      throw SingleQuoteFetchFailed();
+      throw const CustomExceptions.singleQuoteFetchFailed(
+          'Single quote fetch failed');
     }
     final quote = jsonDecode(res.body) as Map<String, dynamic>;
     if (!quote.containsKey('content')) {
-      throw QuoteNotFoundFailure();
+      throw const CustomExceptions.quoteNotFoundFailure('Quote not found');
     }
     return SingleQuote.fromJson(quote);
   }
@@ -33,7 +27,8 @@ class QuoteRepository {
     page = 1;
     final res = await http.get(Uri.parse("$baseUrl/quotes?limit=6"));
     if (res.statusCode != 200) {
-      throw AllQuotesFetchFailed();
+      throw const CustomExceptions.allQuotesFetchFailed(
+          'Failed to fetch all quotes');
     }
     final quotes = jsonDecode(res.body)['results'] as List;
     if (jsonDecode(res.body)['lastItemIndex'] == null) {
@@ -47,7 +42,7 @@ class QuoteRepository {
     final res =
         await http.get(Uri.parse("$baseUrl/quotes?limit=3&page=${++page}"));
     if (res.statusCode != 200) {
-      throw GetMoreFailed();
+      throw const CustomExceptions.getMoreFailed('Failed to fetch more quotes');
     }
     final quotes = jsonDecode(res.body)['results'] as List;
     if (jsonDecode(res.body)['lastItemIndex'] == null) {
