@@ -16,7 +16,6 @@ class SingleQuoteCubit extends Cubit<SingleQuoteState> {
 
     try {
       final SingleQuote quote = await _quoteRepository.getSingleQuote();
-
       emit(state.copyWith(
           status: SingleQuoteStatus.success,
           quote: quote.copyWith(
