@@ -25,7 +25,7 @@ class QuoteRepository {
   int page = 1;
   Future<List> getAllQuotes() async {
     page = 1;
-    final res = await http.get(Uri.parse("$baseUrl/quotes?limit=6"));
+    final res = await http.get(Uri.parse("$baseUrl/quotes?limit=20"));
     if (res.statusCode != 200) {
       throw const CustomExceptions.allQuotesFetchFailed(
           'Failed to fetch all quotes');

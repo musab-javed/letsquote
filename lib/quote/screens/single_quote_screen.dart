@@ -6,6 +6,8 @@ import 'package:letsquote/quote/screens/all_quotes_screen.dart';
 import 'package:letsquote/quote/widgets/single_quote_loading.dart';
 
 class SingleQuoteScreen extends StatelessWidget {
+  const SingleQuoteScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SingleQuoteCubit>(
@@ -39,10 +41,11 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
         builder: (context, state) {
           return Container(
             width: double.infinity,
+            height: MediaQuery.of(context).size.height,
             padding: const EdgeInsets.symmetric(horizontal: 22),
             child: RefreshIndicator(
               onRefresh: () => context.read<SingleQuoteCubit>().fetchQuote(),
-              child: ListView(shrinkWrap: true, children: [
+              child: ListView(children: [
                 const SizedBox(
                   height: 100,
                 ),
@@ -53,7 +56,7 @@ class _SingleQuoteViewState extends State<SingleQuoteView> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AllQuotesScreen())),
+                            builder: (context) => const AllQuotesScreen())),
                     child: const Text(
                       'Explore all quotes',
                       style: TextStyle(
