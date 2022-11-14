@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:letsquote/quote/cubit/quotes_cubit.dart';
 import 'package:letsquote/quote/cubit/single_quote_cubit.dart';
@@ -26,7 +27,7 @@ void main() {
     });
     test('single quote api is working fine', () async {
       when(() => mockQuoteRepository.getSingleQuote())
-          .thenAnswer((invocation) async => testQuote);
+          .thenAnswer((invocation) async => Right(testQuote));
       await singleQuoteCubit.fetchQuote();
       verify(() => mockQuoteRepository.getSingleQuote()).called(1);
     });
@@ -35,7 +36,7 @@ void main() {
             then fetches Single Quote,
             then loading is false now""", () async {
       when(() => mockQuoteRepository.getSingleQuote())
-          .thenAnswer((invocation) async => testQuote);
+          .thenAnswer((invocation) async => Right(testQuote));
 
       final futureCall = singleQuoteCubit.fetchQuote();
       expect(singleQuoteCubit.state.status.isLoading, true);

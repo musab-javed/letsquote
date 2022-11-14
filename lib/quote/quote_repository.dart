@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:letsquote/quote/custom_exceptions.dart';
 
@@ -8,17 +9,18 @@ import 'models/single_quote.dart';
 class QuoteRepository {
   static const baseUrl = 'https://api.quotable.io';
 
-  Future<SingleQuote> getSingleQuote() async {
+  Future<Either<CustomExceptions, SingleQuote>> getSingleQuote() async {
     final res = await http.get(Uri.parse("$baseUrl/random"));
     if (res.statusCode != 200) {
-      throw const CustomExceptions.singleQuoteFetchFailed(
-          'Single quote fetch failed');
+      return left(const CustomExceptions.singleQuoteFetchFailed(
+          'Failed to fetch single quote'));
     }
     final quote = jsonDecode(res.body) as Map<String, dynamic>;
     if (!quote.containsKey('content')) {
-      throw const CustomExceptions.quoteNotFoundFailure('Quote not found');
+      return left(
+          const CustomExceptions.quoteNotFoundFailure('Quote not found'));
     }
-    return SingleQuote.fromJson(quote);
+    return right(SingleQuote.fromJson(quote));
   }
 
   bool isMax = false;

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:letsquote/quote/custom_exceptions.dart';
 import 'package:letsquote/quote/models/single_quote.dart';
 import 'package:letsquote/quote/quote_repository.dart';
 
@@ -14,15 +16,13 @@ class SingleQuoteCubit extends Cubit<SingleQuoteState> {
   Future<void> fetchQuote() async {
     emit(state.copyWith(status: SingleQuoteStatus.loading));
 
-    try {
-      final SingleQuote quote = await _quoteRepository.getSingleQuote();
-      emit(state.copyWith(
-          status: SingleQuoteStatus.success,
-          quote: quote.copyWith(
-              id: quote.id, author: quote.author, content: quote.content)));
-    } catch (e) {
-      if (kDebugMode) print('error in fetchQuote from cubit $e');
-      emit(state.copyWith(status: SingleQuoteStatus.failure));
-    }
+    final Either<CustomExceptions, SingleQuote> quote =
+        await _quoteRepository.getSingleQuote();
+    quote.fold(
+        (l) => emit(state.copyWith(status: SingleQuoteStatus.failure)),
+        (quote) => emit(state.copyWith(
+            status: SingleQuoteStatus.success,
+            quote: quote.copyWith(
+                id: quote.id, author: quote.author, content: quote.content))));
   }
 }
