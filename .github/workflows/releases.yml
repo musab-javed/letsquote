@@ -1,0 +1,39 @@
+name: RELEASE
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/README.md'
+
+  workflow_dispatch:
+    
+
+jobs:
+  build:
+    name: flutter release APK
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - uses: actions/setup-java@v1
+      with:
+          java-version: "12.x"
+    # Setup the flutter environment.
+    - uses: subosito/flutter-action@v2
+      with:
+          flutter-version: "3.x"
+          channel: 'stable'
+    - name: Get flutter dependencies.
+      run: flutter pub get
+    - name: Analyze flutter project
+      run: flutter analyze
+    - name: Run tests
+      run: flutter test
+    - name: Creating APK
+      run: flutter build apk --release
+    - name: Push to release
+      uses: ncipollo/release-action@v2
+      with:
+        artifacts: "build/app/outputs/flutter-apk/*.apk"
+        token: ${{ secrets.TOKEN_RELEASE }}
