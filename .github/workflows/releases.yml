@@ -33,7 +33,7 @@ jobs:
     - name: Creating APK
       run: flutter build apk --release
     - name: Push to release
-      uses: ncipollo/release-action@v2
+      uses: ncipollo/release-action@v1
       with:
         artifacts: "build/app/outputs/flutter-apk/*.apk"
         token: ${{ secrets.TOKEN_RELEASE }}
