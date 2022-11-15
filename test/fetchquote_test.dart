@@ -31,7 +31,7 @@ void main() {
       await singleQuoteCubit.fetchQuote();
       verify(() => mockQuoteRepository.getSingleQuote()).called(1);
     });
-  
+
     test("""loading is true when quote is being fetched,
             then fetches Single Quote,
             then loading is false now""", () async {
@@ -88,7 +88,7 @@ void main() {
 
     test('get all quotes APi is working fine', () async {
       when(() => mockQuoteRepository.getAllQuotes())
-          .thenAnswer((_) async => allTestQuotesFromApi);
+          .thenAnswer((_) async => Right(allTestQuotesFromApi));
       await quotesCubit.fetchAllQuote();
       verify(() => mockQuoteRepository.getAllQuotes()).called(1);
     });
@@ -97,7 +97,7 @@ void main() {
             all quotes are fetched,
             loading is false finally""", () async {
       when(() => mockQuoteRepository.getAllQuotes())
-          .thenAnswer((invocation) async => allTestQuotesFromApi);
+          .thenAnswer((invocation) async => Right(allTestQuotesFromApi));
       final futureCall = quotesCubit.fetchAllQuote();
       expect(quotesCubit.state.status.isLoading, true);
       await futureCall;

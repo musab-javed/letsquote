@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:letsquote/quote/custom_exceptions.dart';
 import 'package:letsquote/quote/models/single_quote.dart';
 
 import '../quote_repository.dart';
@@ -15,16 +17,18 @@ class QuotesCubit extends Cubit<QuotesState> {
   Future<void> fetchAllQuote() async {
     emit(state.copyWith(status: QuotesStatus.loading));
 
-    try {
-      final List quotes = await _quoteRepository.getAllQuotes();
+    final Either<CustomExceptions, List> quotes =
+        await _quoteRepository.getAllQuotes();
+
+    quotes.fold((failure) => emit(state.copyWith(status: QuotesStatus.failure)),
+        (quotes) {
       allQuotes = quotes
           .map((q) => SingleQuote(
               id: q['_id'], author: q['author'], content: q['content']))
           .toList();
-      emit(state.copyWith(status: QuotesStatus.success, quotes: allQuotes));
-    } catch (e) {
-      emit(state.copyWith(status: QuotesStatus.failure));
-    }
+      return emit(
+          state.copyWith(status: QuotesStatus.success, quotes: allQuotes));
+    });
   }
 
   bool isMax = false;
@@ -33,8 +37,10 @@ class QuotesCubit extends Cubit<QuotesState> {
     if (isMax) return;
     if (isLoading) return;
     isLoading = true;
-    try {
-      final List quotes = await _quoteRepository.getMore();
+    final Either<CustomExceptions, List> quotes =
+        await _quoteRepository.getMore();
+    quotes.fold((l) => emit(state.copyWith(status: QuotesStatus.failure)),
+        (quotes) {
       allQuotes.addAll(quotes
           .map((q) => SingleQuote(
               id: q['_id'], author: q['author'], content: q['content']))
@@ -51,8 +57,6 @@ class QuotesCubit extends Cubit<QuotesState> {
             quotes: allQuotes,
             length: allQuotes.length));
       }
-    } catch (e) {
-      emit(state.copyWith(status: QuotesStatus.failure));
-    }
+    });
   }
 }

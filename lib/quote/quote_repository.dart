@@ -25,32 +25,32 @@ class QuoteRepository {
 
   bool isMax = false;
   int page = 1;
-  Future<List> getAllQuotes() async {
+  Future<Either<CustomExceptions,List>> getAllQuotes() async {
     page = 1;
     final res = await http.get(Uri.parse("$baseUrl/quotes?limit=20"));
     if (res.statusCode != 200) {
-      throw const CustomExceptions.allQuotesFetchFailed(
-          'Failed to fetch all quotes');
+      return left(const CustomExceptions.allQuotesFetchFailed(
+          'Failed to fetch all quotes'));
     }
     final quotes = jsonDecode(res.body)['results'] as List;
     if (jsonDecode(res.body)['lastItemIndex'] == null) {
       isMax = true;
     }
-    return quotes;
+    return right(quotes);
   }
 
   bool isLoadingMore = true;
-  Future<List> getMore() async {
+  Future<Either<CustomExceptions,List>> getMore() async {
     final res =
         await http.get(Uri.parse("$baseUrl/quotes?limit=3&page=${++page}"));
     if (res.statusCode != 200) {
-      throw const CustomExceptions.getMoreFailed('Failed to fetch more quotes');
+      return left (const CustomExceptions.getMoreFailed('Failed to fetch more quotes'));
     }
     final quotes = jsonDecode(res.body)['results'] as List;
     if (jsonDecode(res.body)['lastItemIndex'] == null) {
       isMax = true;
     }
-    return quotes;
+    return right(quotes);
   }
 
   bool getMax() {
