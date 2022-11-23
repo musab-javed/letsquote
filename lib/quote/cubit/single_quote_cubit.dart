@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:letsquote/quote/custom_exceptions.dart';
 import 'package:letsquote/quote/models/single_quote.dart';
 import 'package:letsquote/quote/quote_repository.dart';
